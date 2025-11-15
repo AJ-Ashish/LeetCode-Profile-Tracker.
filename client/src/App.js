@@ -32,21 +32,25 @@ function App() {
     setUserData(null);
 
     try {
-      const response = await axios.post(`http://localhost:5000/api/user/${username}`);
-      setUserData(response.data);
-      
-      // Save username to localStorage
-      localStorage.setItem('lastLeetcodeUsername', username);
-    } catch (err) {
-      if (err.response?.status === 404) {
-        setError(err.response.data.error || 'User not found');
-      } else {
-        setError('Failed to fetch data. Please try again.');
-      }
-      console.error('Error:', err);
-    } finally {
-      setLoading(false);
-    }
+  const response = await axios.post(
+    `https://leetcode-profile-tracker-4uhq.onrender.com/api/user/${username}`
+  );
+
+  setUserData(response.data);
+
+  localStorage.setItem('lastLeetcodeUsername', username);
+
+} catch (err) {
+  if (err.response?.status === 404) {
+    setError(err.response.data.error || 'User not found');
+  } else {
+    setError('Failed to fetch data. Please try again.');
+  }
+  console.error('Error:', err);
+} finally {
+  setLoading(false);
+}
+
   };
 
   /**
